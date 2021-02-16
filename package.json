@@ -4,11 +4,7 @@
   "description": "Shopping application for Antique Emporium",
   "main": "app.js",
   "scripts": {
-    "start": "node backend/app.js",
-    "server": "nodemon backend/app.js",
-    "react": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run react\"",
-    "import": "node backend/seederScript.js"
+    "start": "node app.js"
   },
   "author": "Dhaval Pandey",
   "license": "MIT",

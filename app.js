@@ -14,11 +14,9 @@ const productRoutes = require('./routes/productRoutes')
 connectDB();
 
 const PORT = process.env.PORT || 5000;
-const stripeSecretKey = '3e';
 
 const express = require('express')
 const app = express()
-const stripe = require('stripe')(stripeSecretKey)
 const mongoose = require('mongoose');
 const bodyParser  = require('body-parser');
 var cors = require('cors')
