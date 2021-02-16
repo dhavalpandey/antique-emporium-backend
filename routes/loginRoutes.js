@@ -8,8 +8,8 @@ const User = require('../models/User');
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-      successRedirect: 'http://localhost:3000/shop',
-      failureRedirect: 'http://localhost:3000/',
+      successRedirect: 'https://antique-emporium.netlify.app/shop',
+      failureRedirect: 'https://antique-emporium.netlify.app/',
       failureFlash: true
     })(req, res, next);
   });

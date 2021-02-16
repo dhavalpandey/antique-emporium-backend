@@ -52,4 +52,8 @@ app.use('/api', productRoutes);
 app.use('/' , require('./routes/registrationRoutes.js'));
 app.use('/' , require('./routes/loginRoutes.js'));
 
+app.get('*', (req, res) => {
+  res.redirect("https://antique-emporium.netlify.app/shop");
+})
+
 app.listen(PORT, console.log(`Server running at port ${PORT}`))
