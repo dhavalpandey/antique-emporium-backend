@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const passport = require('passport');
 
 const User = require('../models/User')
+const Product = require('../models/product');
 
 //Sign Up handler
 router.post('/signup', (req, res) => {
@@ -32,6 +33,7 @@ router.post('/signup', (req, res) => {
         errors.push({ msg: 'Email is already in use' })
         res.status(400)
       } else {
+        
         const newUser = new User({
           name,
           email,

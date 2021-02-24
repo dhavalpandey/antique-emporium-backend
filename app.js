@@ -52,6 +52,14 @@ app.use('/api', productRoutes);
 app.use('/' , require('./routes/registrationRoutes.js'));
 app.use('/' , require('./routes/loginRoutes.js'));
 
+app.get('/status', (req, res) => {
+  if(req.isAuthenticated()) {
+    res.json({message: 'you are logged in!'})
+  } else {
+    res.status(401).json({message: "you must log in"})
+  }
+})
+
 app.get('*', (req, res) => {
   res.redirect("https://antique-emporium.netlify.app/shop");
 })

@@ -5,7 +5,7 @@ const getAllProducts = async (req, res) => {
         const products = await Product.find({});
         res.json(products);
     } catch (err) {
-        console.error(error);
+        console.error(err);
         res.status(500).json({message: 'Internal Error.'});
     }
 }
@@ -15,7 +15,7 @@ const getProductById = async (req, res) => {
         const product = await Product.findById(req.params.id);
         res.json(product);
     } catch (err) {
-        console.error(error);
+        console.error(err);
         res.status(500).json({message: 'Internal Error.'});
     }
 }
