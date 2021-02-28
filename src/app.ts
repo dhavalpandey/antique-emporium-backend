@@ -15,6 +15,11 @@ connectDB();
 
 const PORT = process.env.PORT || 5000;
 
+let corsOptions = {
+  origin: 'https://antique-emporium.netlify.app/',
+  optionsSuccessStatus: 200
+}
+
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose');

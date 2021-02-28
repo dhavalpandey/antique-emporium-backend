@@ -4,7 +4,9 @@
   "description": "Shopping application for Antique Emporium",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node dist/app.js",
+    "compile": "tsc -w",
+    "import": "node dist/seederScript.js"
   },
   "author": "Dhaval Pandey",
   "license": "MIT",
