@@ -28,26 +28,7 @@ let limiter = rateLimit({
     windowMs: 1 * 60 * 1000,
     max: 10
 });
-let memCache = new cache.Cache();
-let cacheMiddleware = (duration) => {
-    return (req, res, next) => {
-        let key = '__express__' + req.originalUrl || req.url;
-        let cacheContent = memCache.get(key);
-        if (cacheContent) {
-            res.send(cacheContent);
-            return;
-        }
-        else {
-            res.sendResponse = res.send;
-            res.send = (body) => {
-                memCache.put(key, body, duration * 1000);
-                res.sendResponse(body);
-            };
-            next();
-        }
-    };
-};
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
