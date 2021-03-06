@@ -17,15 +17,17 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const rateLimit = require("express-rate-limit");
 const cors = require('cors');
-let corsOptions = {
-    origin: 'https://antique-emporium.netlify.app/',
-    optionsSuccessStatus: 200
-};
+// let corsOptions = {
+//     origin: 'https://antique-emporium.netlify.app/',
+//     optionsSuccessStatus: 200
+// };
 let limiter = rateLimit({
     windowMs: 1 * 60 * 1000,
     max: 10
 });
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: 'https://antique-emporium.netlify.app'
+  }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
