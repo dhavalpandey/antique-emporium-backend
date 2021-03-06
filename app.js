@@ -25,7 +25,7 @@ let limiter = rateLimit({
     windowMs: 1 * 60 * 1000,
     max: 10
 });
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
