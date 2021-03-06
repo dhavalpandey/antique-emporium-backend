@@ -2,15 +2,16 @@
   "name": "antique-emporium",
   "version": "2.0.0",
   "description": "Shopping application for Antique Emporium",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
     "compile": "tsc -w",
-    "import": "node dist/seederScript.js"
+    "import": "node dist/uploadScript.js"
   },
   "author": "Dhaval Pandey",
   "license": "MIT",
   "dependencies": {
+    "@supercharge/request-ip": "^1.1.2",
     "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -19,13 +20,17 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-rate-limit": "^5.2.6",
     "express-session": "^1.17.1",
+    "ioredis": "^4.23.0",
     "jsonwebtoken": "^8.5.1",
+    "memory-cache": "^0.2.0",
     "moment": "^2.29.1",
     "mongoose": "^5.11.15",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "react-redux": "^7.2.2",
+    "redis": "^3.0.2",
     "stripe": "^8.135.0"
   },
   "devDependencies": {

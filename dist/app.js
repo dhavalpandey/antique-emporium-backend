@@ -10,28 +10,57 @@ const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes');
 connectDB();
 const PORT = process.env.PORT || 5000;
-let corsOptions = {
-    origin: 'https://antique-emporium.netlify.app/',
-    optionsSuccessStatus: 200
-};
+const SECRET = process.env.SECRET;
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-var cors = require('cors');
-app.use(cors());
+const rateLimit = require("express-rate-limit");
+const cors = require('cors');
+const redis = require('redis');
+const client = redis.createClient();
+const cache = require('memory-cache');
+let corsOptions = {
+    origin: 'https://antique-emporium.netlify.app/',
+    optionsSuccessStatus: 200
+};
+let limiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 10
+});
+let memCache = new cache.Cache();
+let cacheMiddleware = (duration) => {
+    return (req, res, next) => {
+        let key = '__express__' + req.originalUrl || req.url;
+        let cacheContent = memCache.get(key);
+        if (cacheContent) {
+            res.send(cacheContent);
+            return;
+        }
+        else {
+            res.sendResponse = res.send;
+            res.send = (body) => {
+                memCache.put(key, body, duration * 1000);
+                res.sendResponse(body);
+            };
+            next();
+        }
+    };
+};
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(limiter);
 app.use(session({
-    secret: 'secret',
+    secret: SECRET,
     resave: true,
     saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
@@ -47,9 +76,6 @@ app.get('/status', (req, res) => {
     else {
         res.status(401).json({ message: "you must log in" });
     }
-});
-app.get('*', (req, res) => {
-    res.redirect("https://antique-emporium.netlify.app/shop");
 });
 app.listen(PORT, console.log(`Server running at port ${PORT}`));
 //# sourceMappingURL=app.js.map

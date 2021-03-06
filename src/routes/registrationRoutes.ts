@@ -7,24 +7,24 @@ const User = require('../models/User')
 const Product = require('../models/product');
 
 //Sign Up handler
-router.post('/signup', (req, res) => {
+router.post('/signup', async (req, res) => {
   const { name, email, password, password2 } = req.body;
   let errors = [];
 
 // All errors
-  if(!name || !email || !password || !password2) {
+  if(await !name || !email || !password || !password2) {
     errors.push({ msg: 'Please fill in empty fields '})
   }
 
-  if(password !== password2) {
+  if(await password !== password2) {
     errors.push({ msg: 'The passwords do not match' })
   }
 
-  if(password.length < 6) {
+  if(await password.length < 6) {
     errors.push({ msg: 'The password must have at least 6 characters'})
   }
 
-  if(errors.length > 0){
+  if(await errors.length > 0){
     res.status(200).json({success: true, message: "signned up succesfully!"})
   } else {
     User.findOne({ email: email })

@@ -20,7 +20,7 @@ const User = require('../models/User');
 router.post('/login', (req, res) => __awaiter(this, void 0, void 0, function* () {
     const { email, password } = req.body;
     const user = yield User.findOne({ email }).lean();
-    if (!user) {
+    if (yield !user) {
         return res.status(401).json({ status: "error", error: 'Error! Credentials not found' });
     }
     if (yield bcrypt.compare(password, user.password)) {

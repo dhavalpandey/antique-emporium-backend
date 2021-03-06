@@ -1,22 +1,31 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/User');
 const Product = require('../models/product');
-router.post('/signup', (req, res) => {
+router.post('/signup', (req, res) => __awaiter(this, void 0, void 0, function* () {
     const { name, email, password, password2 } = req.body;
     let errors = [];
-    if (!name || !email || !password || !password2) {
+    if ((yield !name) || !email || !password || !password2) {
         errors.push({ msg: 'Please fill in empty fields ' });
     }
-    if (password !== password2) {
+    if ((yield password) !== password2) {
         errors.push({ msg: 'The passwords do not match' });
     }
-    if (password.length < 6) {
+    if ((yield password.length) < 6) {
         errors.push({ msg: 'The password must have at least 6 characters' });
     }
-    if (errors.length > 0) {
+    if ((yield errors.length) > 0) {
         res.status(200).json({ success: true, message: "signned up succesfully!" });
     }
     else {
@@ -45,6 +54,6 @@ router.post('/signup', (req, res) => {
             }
         });
     }
-});
+}));
 module.exports = router;
 //# sourceMappingURL=registrationRoutes.js.map

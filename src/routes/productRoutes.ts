@@ -7,7 +7,7 @@ const Product = require('../models/product');
 router.get('/products', getAllProducts);
 router.get('/:id', getProductById);
 
-router.put('/new', (req, res) => {
+router.put('/new', async (req, res) => {
     const insertProduct = [{
       name: "Test product 123",
       imageUrl:
@@ -18,7 +18,7 @@ router.put('/new', (req, res) => {
         countInStock: 1,
     }]
   
-    Product.insertMany(insertProduct);
+    await Product.insertMany(insertProduct);
   
     // User.findOne({ email: "test@test.com" })
     // .then(user => {
