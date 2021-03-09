@@ -26,37 +26,13 @@ const redis = require('redis')
 const client = redis.createClient()
 const cache = require('memory-cache');
 
-let corsOptions = {
-  origin: 'https://antique-emporium.netlify.app/',
-  optionsSuccessStatus: 200
-}
-
 let limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 10 // limit each IP to 2 requests per minute
+  windowMs: 1 * 60 * 1000,
+  max: 10
 });
-
-//Cache
-let memCache = new cache.Cache();
-let cacheMiddleware = (duration: number) => {
-  return (req: any, res: any, next: any) => {
-      let key =  '__express__' + req.originalUrl || req.url
-      let cacheContent = memCache.get(key);
-      if(cacheContent){
-          res.send( cacheContent );
-          return
-      }else{
-          res.sendResponse = res.send
-          res.send = (body: any) => {
-              memCache.put(key,body,duration*1000);
-              res.sendResponse(body)
-          }
-          next()
-      }
-  }
-}
-
-app.use(cors(corsOptions))
+app.use(cors({
+  origin: 'https://antique-emporium.netlify.app'
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
