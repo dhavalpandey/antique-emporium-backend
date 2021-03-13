@@ -13,12 +13,16 @@ const productRoutes = require('./routes/productRoutes');
 connectDB();
 const PORT = process.env.PORT || 5000;
 const SECRET = process.env.SECRET;
+const REDIS_PORT = 6379;
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
+const fetch = require('node-fetch');
+// const redis = require('redis');
+// const client = redis.createClient(REDIS_PORT);
 const apollo_server_express_1 = require('apollo-server-express');
 const graphqlHTTP = require('express-graphql');
 const graphql = require('graphql');
@@ -39,7 +43,7 @@ const server = new apollo_server_express_1.ApolloServer({
 server.applyMiddleware({ app });
 let limiter = rateLimit({
     windowMs: 1 * 60 * 1000,
-    max: 10,
+    max: 100,
 });
 app.use(
     cors({
@@ -77,5 +81,17 @@ app.get('/status', (req, res) => {
         res.status(401).json({ message: 'you must log in' });
     }
 });
+
+// app.get('/test', (req, res) => {
+//     client.get('test', (err, data) => {
+//         if (err) throw err;
+//         if (data !== null) {
+//             res.send(data);
+//         } else {
+//             client.setex('test', 60, 'test123 hello');
+//             res.send('hello');
+//         }
+//     });
+// });
 app.listen(PORT, console.log(`Server running at port ${PORT}`));
 //# sourceMappingURL=app.js.map
