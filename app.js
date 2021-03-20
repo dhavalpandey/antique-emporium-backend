@@ -47,7 +47,7 @@ let limiter = rateLimit({
 });
 app.use(
     cors({
-        origin: 'https://antique-emporium.netlify.app',
+        origin: 'https://antique-emporium.netlify.app' && 'https://antique-emporium-frontend.vercel.app',
     })
 );
 
